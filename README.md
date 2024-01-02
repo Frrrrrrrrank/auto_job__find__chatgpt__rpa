@@ -22,4 +22,7 @@ robotframework-pythonlibcore
 
 Plugin: Intellibot@Selenium Library
 
+------------------下面是简单的教学视频---------------------
+B站链接：【赛博投简历脚本教程】 https://www.bilibili.com/video/BV1UC4y1N78v/?share_source=copy_web&vd_source=b2608434484091fcc64d4eb85233122d
+油管链接：https://youtu.be/TlnytEi2lD8?si=jfcDj2MZqBptziZc
 
