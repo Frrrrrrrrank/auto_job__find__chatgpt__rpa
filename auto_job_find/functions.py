@@ -24,7 +24,7 @@ def create_assistant(client):
   else:
     # If no assistant.json is present, create a new assistant using the below specifications
 
-    # To change the knowledge document, modifiy the file name below to match your document
+    # To change the knowledge document, modify the file name below to match your document
     # If you want to add multiple files, paste this function into ChatGPT and ask for it to add support for multiple files
     file = client.files.create(file=open("my_cover.pdf", "rb"),
                                purpose='assistants')
