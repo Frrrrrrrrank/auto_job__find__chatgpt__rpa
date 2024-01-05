@@ -8,10 +8,10 @@ from openai import OpenAI
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from langchain_functions import get_text_chunks, get_vectorstore, read_resumes, should_use_langchain, generate_letter
 
 import functions
 import finding_jobs
-
 
 # Check OpenAI version compatibility
 from packaging import version
@@ -31,9 +31,10 @@ else:
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-# Create or load assistant
-assistant_id = functions.create_assistant(
-    client)  # this function comes from "functions.py"
+if not should_use_langchain():
+    # Create or load assistant
+    assistant_id = functions.create_assistant(
+        client)  # this function comes from "functions.py"
 
 def create_thread(client):
     # Function to create a new thread and return its ID
@@ -125,12 +126,10 @@ def send_response_and_go_back(driver, response):
     driver.back()
     time.sleep(3)
 
-def send_job_descriptions_to_chat(assistant_id, url, browser_type, label):
+def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, vectorstore=None):
     # 开始浏览并获取工作描述
     finding_jobs.open_browser_with_options(url, browser_type)
     finding_jobs.log_in()
-
-
 
     job_index = 1  # 开始的索引
     while True:
@@ -144,7 +143,10 @@ def send_job_descriptions_to_chat(assistant_id, url, browser_type, label):
             job_description = finding_jobs.get_job_description_by_index(job_index)
             if job_description:
                 # 发送描述到聊天并打印响应
-                response = chat(job_description, assistant_id)
+                if should_use_langchain():
+                    response = generate_letter(vectorstore, job_description)
+                else:
+                    response = chat(job_description, assistant_id)
                 print(response)
                 time.sleep(1)
                 # 点击沟通按钮
@@ -172,9 +174,15 @@ def send_job_descriptions_to_chat(assistant_id, url, browser_type, label):
 
 
 if __name__ == '__main__':
-    assistant_id = functions.create_assistant(client)
     url = "https://www.zhipin.com/web/geek/job-recommend?ka=header-job-recommend"
     browser_type = "chrome"
-    label = "互联网产品经理（上海）"  # 想要选择的下拉菜单项
-    send_job_descriptions_to_chat(assistant_id, url, browser_type,label)
+    label = "iOS（深圳）"  # 想要选择的下拉菜单项
+    if should_use_langchain():
+        text = read_resumes()
+        chunks = get_text_chunks(text)
+        vectorstore = get_vectorstore(chunks)
+        send_job_descriptions_to_chat(url, browser_type,label, vectorstore=vectorstore)
+    else:
+        assistant_id = functions.create_assistant(client)
+        send_job_descriptions_to_chat(url, browser_type,label, assistant_id=assistant_id)
 

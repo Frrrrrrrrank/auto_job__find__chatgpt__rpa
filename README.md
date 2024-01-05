@@ -28,3 +28,19 @@ B站链接：【赛博投简历脚本教程】 https://www.bilibili.com/video/BV
 
 油管链接：https://youtu.be/TlnytEi2lD8?si=jfcDj2MZqBptziZc
 
+## 运行方式
+先将该项目clone到本地，然后在项目根目录下执行
+```bash
+pip install -r requirements.txt
+```
+
+### assistant方式运行
+打开.env文件，在里面配置好OpenAI的API key
+随后将pdf简历上传到文件夹auto_job_find里，命名为“my_cover".随后执行write_response.py即可
+这种方式不支持使用自定义api，优势是执行速度更快
+如果需要使用自定义api，请使用下面的方式运行
+
+### langchain方式
+同样打开.env文件，在里面配置好OpenAI的API key和你想要请求的api地址
+随后将pdf简历放到文件夹resume里
+最后执行write_response.py即可

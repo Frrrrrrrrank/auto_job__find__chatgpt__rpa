@@ -81,25 +81,39 @@ def get_job_description():
     return job_description
 
 def select_dropdown_option(driver, label):
-    # 确保触发下拉列表的元素可见并且可点击
-    trigger_selector = "//*[@id='wrap']/div[2]/div[1]/div/div[1]/div"
-    trigger_element = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, trigger_selector))
-    )
-    trigger_element.click()  # 打开下拉菜单
+    # 尝试在具有特定类的元素中找到文本
+    trigger_elements = driver.find_elements(By.XPATH, "//*[@class='recommend-job-btn has-tooltip']")
 
-    # 等待下拉列表元素变为可见
+    # 标记是否找到元素
+    found = False
+
+    for element in trigger_elements:
+        if label in element.text:
+            # 确保元素可见并且可点击
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable(element))
+            element.click()  # 点击找到的元素
+            found = True
+            break
+
+    # 如果在按钮中找到了文本，就不再继续下面的操作
+    if found:
+        return
+
+    # 如果在按钮中没有找到文本，执行原来的下拉列表操作
+    trigger_selector = "//*[@id='wrap']/div[2]/div[1]/div/div[1]/div"
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, trigger_selector))
+    ).click()  # 打开下拉菜单
+
     dropdown_selector = "ul.dropdown-expect-list"
     WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, dropdown_selector))
     )
 
-    # 现在点击下拉列表中的具体选项
     option_selector = f"//li[contains(text(), '{label}')]"
-    option_element = WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, option_selector))
-    )
-    option_element.click()  # 选择下拉菜单中的选项
+    ).click()  # 选择下拉菜单中的选项
 
 
 def get_job_description_by_index(index):
