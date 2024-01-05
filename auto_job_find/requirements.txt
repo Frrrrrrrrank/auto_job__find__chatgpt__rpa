@@ -1,0 +1,6 @@
+openai
+python-dotenv
+selenium
+robotframework
+robotframework-seleniumlibrary
+robotframework-pythonlibcore
