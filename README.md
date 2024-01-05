@@ -8,13 +8,14 @@
 
 ## 操作步骤
 
-1. 请首先配置好openai的api（使用.env文件或者在代码中配置）
-2. 将pdf简历上传到文件夹auto_job_find里，命名为 **“my_cover.pdf"**
+1. 请首先配置好 openai 的 api（使用.env文件或者在代码中配置）
+2. 将pdf简历上传到文件夹 auto_job_find 里，命名为 **“my_cover.pdf"**
 3. 将需要的包安装好
-4. 执行write_response.py
+4. 执行 write_response.py
 
-## 关于 assistant
-会自动生成openai的asistant，并在本地产生一个.json文件，只有第一次运行的时候才会产生，后面每次运行如果检测到这个json，就会调用已有的asistant。
+## 关于 asistant
+
+会自动生成 openai 的 asistant，并在本地产生一个 .json 文件，只有第一次运行的时候才会产生，后面每次运行如果检测到这个 json ，就会调用已有的 asistant。
 
 ## 使用到的包
 
