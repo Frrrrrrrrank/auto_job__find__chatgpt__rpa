@@ -57,7 +57,7 @@ def get_vectorstore(text_chunks):
 # 生成求职信
 def generate_letter(vectorstore, job_description):
     langchain_prompt_template = f"""
-        你将扮演一位求职者的角色，根据上下文里的简历内容以及应聘工作的描述，来直接给HR写一个礼貌专业的求职新消息，要求能够用专业的语言结合简历中的经历和技能，并结合应聘工作的描述，来阐述自己的优势，尽最大可能打动招聘者。
+        你将扮演一位求职者的角色,根据上下文里的简历内容以及应聘工作的描述,来直接给HR写一个礼貌专业的求职新消息,要求能够用专业的语言结合简历中的经历和技能,并结合应聘工作的描述,来阐述自己的优势,尽最大可能打动招聘者。始终使用中文来进行消息的编写,字数限制在300字以内。开头是招聘负责人, 结尾附上求职者联系方式。这是一份求职消息，不要包含求职内容以外的东西,例如“根据您上传的求职要求和个人简历,我来帮您起草一封求职邮件：”这一类的内容，以便于我直接自动化复制粘贴发送。
         工作描述
         {job_description}"""+"""
         简历内容:
@@ -66,10 +66,10 @@ def generate_letter(vectorstore, job_description):
         {question} 
     """
 
-    question = "并且请您始终使用中文来进行消息的编写,开头是招聘负责人，结尾是真诚的。这是一封完整的求职信，不要包含求职信内容以外的东西，例如“根据您上传的求职要求和个人简历，我来帮您起草一封求职邮件：”这一类的内容，以便于我直接自动化复制粘贴发送"
+    question = "根据工作描述，寻找出简历里最合适的技能都有哪些?求职者的优势是什么?"
 
     PROMPT = PromptTemplate.from_template(langchain_prompt_template)
-    llm = ChatOpenAI(temperature=0, openai_api_base=OPENAI_BASE_URL, openai_api_key=OPENAI_API_KEY)
+    llm = ChatOpenAI(temperature=3, openai_api_base=OPENAI_BASE_URL, openai_api_key=OPENAI_API_KEY)
     qa_chain = RetrievalQA.from_chain_type(
         llm, 
         retriever=vectorstore.as_retriever(),
@@ -78,5 +78,9 @@ def generate_letter(vectorstore, job_description):
     )
 
     result = qa_chain({"query": question})
+    letter = result['result']
 
-    return result['result']
+    #去掉所有换行符，防止分成多段消息
+    letter = letter.replace('\n', ' ')
+    
+    return letter
