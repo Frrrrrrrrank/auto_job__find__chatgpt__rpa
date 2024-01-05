@@ -56,6 +56,7 @@ def get_vectorstore(text_chunks):
 
 # 生成求职信
 def generate_letter(vectorstore, job_description):
+    # 字数限制
     character_limit = 300
 
     langchain_prompt_template = f"""
