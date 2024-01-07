@@ -3,3 +3,6 @@ openai==1.6.1
 packaging==23.2
 python-dotenv==1.0.0
 selenium==4.16.0
+robotframework
+robotframework-seleniumlibrary
+robotframework-pythonlibcore
