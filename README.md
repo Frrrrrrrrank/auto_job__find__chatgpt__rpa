@@ -38,6 +38,23 @@ Plugin: Intellibot@Selenium Library
 
 [油管链接](https://youtu.be/TlnytEi2lD8?si=jfcDj2MZqBptziZc)
 
+## 运行方式
+先将该项目clone到本地，然后在项目根目录下执行
+```bash
+pip install -r requirements.txt
+```
+
+### assistant方式运行
+打开.env文件，在里面配置好OpenAI的API key
+随后将pdf简历上传到文件夹auto_job_find里，命名为“my_cover".随后执行write_response.py即可
+这种方式不支持使用自定义api，优势是执行速度更快
+如果需要使用自定义api，请使用下面的方式运行
+
+### langchain方式
+同样打开.env文件，在里面配置好OpenAI的API key和你想要请求的api地址
+随后将pdf简历放到文件夹resume里
+最后执行write_response.py即可
+
 ------------下面是其他朋友基于js构建的更加易于使用的代码---------------
 
 我一直也在考虑如何可以降低各位的使用门槛，基于现在项目的热度，我发现很多朋友都需要这个东西来帮助自己，但是我相信对于更多的人而言，甚至vpn都是一个障碍
