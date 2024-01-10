@@ -13,9 +13,9 @@
 3. 将需要的包安装好
 4. 执行 write_response.py
 
-## 关于 asistant
+## 关于 assistant
 
-会自动生成 openai 的 asistant，并在本地产生一个 .json 文件，只有第一次运行的时候才会产生，后面每次运行如果检测到这个 json ，就会调用已有的 asistant。
+会自动生成 openai 的 assistant，并在本地产生一个 .json 文件，只有第一次运行的时候才会产生，后面每次运行如果检测到这个 json ，就会调用已有的 assistant。
 
 ## 使用到的包
 
