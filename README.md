@@ -25,6 +25,7 @@
 - `robotframework`
 - `robotframework-seleniumlibrary`
 - `robotframework-pythonlibcore`
+- `faiss-cpu不支持3.12（faiss-gpu不清楚）。建议大家用3.11及以下版本的python运行脚本。` from @[huanmit](https://github.com/huanmit)
 
 ## About RPA
 
