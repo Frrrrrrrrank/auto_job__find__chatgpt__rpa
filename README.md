@@ -65,3 +65,6 @@ pip install -r requirements.txt
 感谢朋友的贡献，以下是链接：
 
 [https://github.com/noBaldAaa](https://github.com/noBaldAaa/find-job)https://github.com/noBaldAaa/find-job
+
+------------下面是其他朋友基于azure的openai api构建的版本的更加易于使用的代码---------------
+https://github.com/LouisCaixuran/auto_job_find_azure
