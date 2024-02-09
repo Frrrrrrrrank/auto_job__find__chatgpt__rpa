@@ -142,25 +142,30 @@ def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, v
             # 调用 finding_jobs.py 中的函数来获取描述
             job_description = finding_jobs.get_job_description_by_index(job_index)
             if job_description:
-                # 发送描述到聊天并打印响应
-                if should_use_langchain():
-                    response = generate_letter(vectorstore, job_description)
-                else:
-                    response = chat(job_description, assistant_id)
-                print(response)
-                time.sleep(1)
-                # 点击沟通按钮
-                contact_button = driver.find_element(By.XPATH, "//*[@id='wrap']/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/a[2]")
-                contact_button.click()
+                element = driver.find_element(By.CSS_SELECTOR, '.op-btn.op-btn-chat').text
+                print(element)
+                if element == '立即沟通':
+                    # 发送描述到聊天并打印响应
+                    if should_use_langchain():
+                        response = generate_letter(vectorstore, job_description)
+                    else:
+                        response = chat(job_description, assistant_id)
+                    print(response)
+                    time.sleep(1)
+                    # 点击沟通按钮
 
-                # 等待回复框出现
-                xpath_locator_chat_box = "//*[@id='chat-input']"
-                chat_box = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, xpath_locator_chat_box))
-                )
+                    contact_button = driver.find_element(By.XPATH, "//*[@id='wrap']/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/a[2]")
+                    
+                    contact_button.click()
 
-                # 调用函数发送响应
-                send_response_and_go_back(driver, response)
+                    # 等待回复框出现
+                    xpath_locator_chat_box = "//*[@id='chat-input']"
+                    chat_box = WebDriverWait(driver, 50).until(
+                        EC.presence_of_element_located((By.XPATH, xpath_locator_chat_box))
+                    )
+
+                    # 调用函数发送响应
+                    send_response_and_go_back(driver, response)
 
 
 
