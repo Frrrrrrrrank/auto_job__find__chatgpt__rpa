@@ -56,6 +56,15 @@ pip install -r requirements.txt
 随后将pdf简历放到文件夹resume里
 最后执行write_response.py即可
 
+## 简化付费版
+
+可以一键下载直接运行，里面甚至不需要自己配置API，如果当前的免费版本让您头痛，难以使用，您也可以在下面链接找到一个更加易用的版本，抛除API和服务器我几乎
+不赚钱，就当请我喝一杯咖啡吧，感谢各位的支持
+https://www.123pan.com/s/0kebjv-gQIZ3.html
+
+
+
+
 ------------下面是其他朋友基于js构建的更加易于使用的代码---------------
 
 我一直也在考虑如何可以降低各位的使用门槛，基于现在项目的热度，我发现很多朋友都需要这个东西来帮助自己，但是我相信对于更多的人而言，甚至vpn都是一个障碍
@@ -68,3 +77,5 @@ pip install -r requirements.txt
 
 ------------下面是其他朋友基于azure的openai api构建的版本的更加易于使用的代码---------------
 https://github.com/LouisCaixuran/auto_job_find_azure
+
+
