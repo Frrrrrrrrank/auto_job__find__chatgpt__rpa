@@ -171,7 +171,7 @@ def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, v
 
             # 等待一定时间后处理下一个工作描述
             time.sleep(3)
-            # job_index += 1
+            job_index += 1
 
         except Exception as e:
             print(f"An error occurred: {e}")
