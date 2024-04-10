@@ -1,3 +1,18 @@
+作者已经去打工了，现在在sider做产品经理，义务为我们的产品打一下广告，各位见谅
+[![banner](https://github.com/Frrrrrrrrank/auto_job__find__chatgpt__rpa/assets/82270228/0fff88f5-670c-4126-b6aa-3df1763fe757)](https://sider.ai/ad-land-redirect?source=github&p1=mi&p2=kk)
+
+欢迎大家使用
+
+## 更加便于操作的版本
+另外，如果一些用户确实布置这个项目遇到很多问题，我提供一个收费的版本，加了美工服务器，跑的是我自己的api，一键无脑使用，网站上也有教学视频和使用手册
+
+
+www.aijobpathfinder.com
+
+
+差不多就是成本价+服务器还有美工的成本，当然各位要是技术ok，免费版本和付费版本是完全一样的，甚至这里还支持langchian
+
+
 这是一个完全免费的脚本，只需要你们自己配置好openai的api即可
 
 希望您能给我点个 **star**
