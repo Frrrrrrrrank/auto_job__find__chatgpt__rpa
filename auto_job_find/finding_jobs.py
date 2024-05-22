@@ -24,6 +24,12 @@ def open_browser_with_options(url, browser):
     if browser == "chrome":
         driver = webdriver.Chrome(options=options)
         driver.maximize_window()
+    elif browser == "edge":
+        driver = webdriver.Edge()
+        driver.maximize_window()
+    elif browser == "safari":
+        driver = webdriver.Safari()
+        driver.maximize_window()
     else:
         raise ValueError("Browser type not supported")
 
@@ -34,6 +40,7 @@ def open_browser_with_options(url, browser):
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, xpath_locator))
     )
+
 
 def log_in():
     global driver
@@ -61,8 +68,8 @@ def log_in():
         EC.presence_of_element_located((By.XPATH, xpath_locator_login_success))
     )
 
-def get_job_description():
 
+def get_job_description():
     global driver
 
     # 使用给定的 XPath 定位职位描述元素
@@ -79,6 +86,7 @@ def get_job_description():
 
     # 返回职位描述文本，如果函数需要
     return job_description
+
 
 def select_dropdown_option(driver, label):
     # 尝试在具有特定类的元素中找到文本
@@ -97,6 +105,8 @@ def select_dropdown_option(driver, label):
 
     # 如果在按钮中找到了文本，就不再继续下面的操作
     if found:
+        # 取消注释，提供选择更多tag的时间
+        # time.sleep(20)
         return
 
     # 如果在按钮中没有找到文本，执行原来的下拉列表操作
@@ -133,9 +143,7 @@ def get_job_description_by_index(index):
         print(f"No job found at index {index}.")
         return None
 
+
 # Variables
 url = "https://www.zhipin.com/web/geek/job-recommend?ka=header-job-recommend"
 browser_type = "chrome"
-
-
-

@@ -16,17 +16,18 @@ import finding_jobs
 # Check OpenAI version compatibility
 from packaging import version
 from dotenv import load_dotenv
+
 load_dotenv()
 
 required_version = version.parse("1.1.1")
 current_version = version.parse(openai.__version__)
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 if current_version < required_version:
-  raise ValueError(
-      f"Error: OpenAI version {openai.__version__} is less than the required version 1.1.1"
-  )
+    raise ValueError(
+        f"Error: OpenAI version {openai.__version__} is less than the required version 1.1.1"
+    )
 else:
-  print("OpenAI version is compatible.")
+    print("OpenAI version is compatible.")
 
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -35,6 +36,7 @@ if not should_use_langchain():
     # Create or load assistant
     assistant_id = functions.create_assistant(
         client)  # this function comes from "functions.py"
+
 
 def create_thread(client):
     # Function to create a new thread and return its ID
@@ -74,7 +76,8 @@ def chat(user_input, assistant_id, thread_id=None):
         while True:
             run_status = client.beta.threads.runs.retrieve(
                 thread_id=thread_id,
-                run_id=run.id
+                run_id=run.id,
+                timeout=60  # 设置超时时间为60秒
             )
 
             if run_status.status == 'completed':
@@ -89,7 +92,10 @@ def chat(user_input, assistant_id, thread_id=None):
         assistant_message = messages.data[0].content[0].text.value
 
         # 将换行符替换为一个空格
-        formatted_message = assistant_message.replace("\n", " ")
+        formatted_message = assistant_message.replace("\n", " ").replace(" ", "").replace("真诚的，龙思卓", "")
+        import re
+        formatted_message = re.sub(r'【.*?】', '', formatted_message)
+
 
         # response_data = json.dumps({"response": assistant_message, "thread_id": thread_id})
         return formatted_message
@@ -116,7 +122,6 @@ def send_response_to_chat_box(driver, response):
     time.sleep(1)
 
 
-
 def send_response_and_go_back(driver, response):
     # 调用函数发送响应
     send_response_to_chat_box(driver, response)
@@ -125,6 +130,7 @@ def send_response_and_go_back(driver, response):
     # 返回到上一个页面
     driver.back()
     time.sleep(3)
+
 
 def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, vectorstore=None):
     # 开始浏览并获取工作描述
@@ -154,8 +160,9 @@ def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, v
                     time.sleep(1)
                     # 点击沟通按钮
 
-                    contact_button = driver.find_element(By.XPATH, "//*[@id='wrap']/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/a[2]")
-                    
+                    contact_button = driver.find_element(By.XPATH,
+                                                         "//*[@id='wrap']/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/a[2]")
+
                     contact_button.click()
 
                     # 等待回复框出现
@@ -166,8 +173,6 @@ def send_job_descriptions_to_chat(url, browser_type, label, assistant_id=None, v
 
                     # 调用函数发送响应
                     send_response_and_go_back(driver, response)
-
-
 
             # 等待一定时间后处理下一个工作描述
             time.sleep(3)
@@ -186,8 +191,7 @@ if __name__ == '__main__':
         text = read_resumes()
         chunks = get_text_chunks(text)
         vectorstore = get_vectorstore(chunks)
-        send_job_descriptions_to_chat(url, browser_type,label, vectorstore=vectorstore)
+        send_job_descriptions_to_chat(url, browser_type, label, vectorstore=vectorstore)
     else:
         assistant_id = functions.create_assistant(client)
-        send_job_descriptions_to_chat(url, browser_type,label, assistant_id=assistant_id)
-
+        send_job_descriptions_to_chat(url, browser_type, label, assistant_id=assistant_id)
