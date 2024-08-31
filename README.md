@@ -75,7 +75,13 @@ pip install -r requirements.txt
 ### chatgpt4 及以上运行方式
 如果尝试使用更新的chatGPT则不能保持最新版本为`v1.1.1`，同时如果报错信息为`An error occurred: Error code: 400 - {'error': {'message': "The requested model 'gpt-4o-mini' cannot be used with the Assistants API in v1. Follow the migration guide to upgrade to v2: https://platform.openai.com/docs/assistants/migration.", 'type': 'invalid_request_error', 'param': 'model', 'code': 'unsupported_model'}}`
 
-需要手动将chatgpt更新到最新版，以及更改`create_assistant`中的结构体，详细参考[迁移模型](https://platform.openai.com/docs/assistants/migration)中的描述。建议直接在[平台](https://platform.openai.com/assistants/)上手动添加最新的assist然后复制代码到`assistant.json`中最为方便
+1. 需要手动将chatgpt更新到最新版，
+
+```shell
+pip install --upgrade openai
+```
+
+2. 以及更改`create_assistant`中的结构体，详细参考[迁移模型](https://platform.openai.com/docs/assistants/migration)中的描述。建议直接在[平台](https://platform.openai.com/assistants/)上手动添加最新的assist然后复制代码到`assistant.json`中最为方便.
 ```json
 {"assistant_id": "asst_token"}
 ```
